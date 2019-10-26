@@ -25,3 +25,19 @@ If you want to see more branches,  add `-n` or `--number` following the number o
 `python3 get_latest_branches.py -n 8`
 
 `python3 get_latest_branches.py --number 10`
+
+
+
+```
+###############################################
+### Welcome to your friendly git checkouter ###
+###############################################
+    
+    You are currently working on master
+
+Latest 5 branches you worked on:
+
+[1] - master
+
+Your desired branch would be? 
+```
