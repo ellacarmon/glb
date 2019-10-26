@@ -9,7 +9,7 @@ def get_branches():
     print("""#######################################
 ### Welcome to your friendly git checkouter ###
 ###############################################
-    
+
     You are currently on {}""".format(cur_branch))
     number_of_branches = int(input("How many branches would you like to see? "))
     print("Latest {} branches you worked on:".format(number_of_branches))
@@ -23,11 +23,12 @@ def get_branches():
     bla.sort(key=itemgetter(1), reverse=True)
     branches = [i[0] for i in bla]
     latest_branches = branches[0:number_of_branches]
-    for item in latest_branches:
-        print(latest_branches.index(item), item)
+    latest_branches.insert(0, None) # number the branches starting from 1 instead of 0
+    for index, item in enumerate(latest_branches):
+        if index > 0: print(index, item)
     chosen_branch_number = int(input("Your desired branch would be?  "))
     git2 = repo.git
-    chosen_branch = branches[chosen_branch_number]
+    chosen_branch = latest_branches[chosen_branch_number]
     git2.checkout(chosen_branch)
     if repo.active_branch.name == chosen_branch:
         print("Checkedout\checkouted successfully to {}".format(chosen_branch))
@@ -37,4 +38,3 @@ def get_branches():
 
 if __name__ == "__main__":
     get_branches()
-
