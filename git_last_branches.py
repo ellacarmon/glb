@@ -25,7 +25,7 @@ def get_branches():
     latest_branches = branches[0:number_of_branches]
     latest_branches.insert(0, None) # number the branches starting from 1 instead of 0
     for index, item in enumerate(latest_branches):
-        if index > 0: print(index, item)
+        if index > 0: print("[%d] - %s" % (index, item))
     chosen_branch_number = int(input("Your desired branch would be?  "))
     git2 = repo.git
     chosen_branch = latest_branches[chosen_branch_number]
