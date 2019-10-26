@@ -24,20 +24,23 @@ def get_branches(chosen_number):
     You are currently working on {}""".format(bold(cur_branch, 'blue')))
     print("\nLatest {} branches you worked on:\n".format(chosen_number))
     all_branches_with_dates = []
-    for ref in repo.refs:
+    for ref in repo.refs:  # going over all branches and listing their names and modified date
         branch_name = ref.name
-        if ref.path.startswith('refs/heads/'):
+        if ref.path.startswith('refs/heads/'):  # adding only branches with heads
+            # converting from epoch time
             committed_time = time.strftime('%Y-%m-%dT%H:%M:%S', time.localtime(ref.object.committed_date))
-
             all_branches_with_dates.append((branch_name, committed_time))
-    all_branches_with_dates.sort(key=itemgetter(1), reverse=True)
-    branches_names = [i[0] for i in all_branches_with_dates]
+
+    all_branches_with_dates.sort(key=itemgetter(1), reverse=True)  # Sorting all branches by date
+    branches_names = [i[0] for i in all_branches_with_dates]   # Creating a list of latest branches names
     latest_branches = branches_names[0:chosen_number]
-    latest_branches.insert(0, None) # number the branches starting from 1 instead of 0
+    latest_branches.insert(0, None)  # number the branches starting from 1 instead of 0
     for index, item in enumerate(latest_branches):
         if index > 0: print("[%d] - %s" % (index, item))
     chosen_branch_number = (int(input("\nYour desired branch would be?  ")))-1
     chosen_branch = branches_names[chosen_branch_number]
+    if chosen_branch == repo.active_branch.name:
+        print("\nYou are already working on {}".format(bold(chosen_branch, 'red')))
     try:
         repo.git.checkout(chosen_branch)
         if repo.active_branch.name == chosen_branch:
