@@ -8,7 +8,8 @@ Repo path (.git) will be taken from the location you run the script from
 # Installation
 Use the `import.sh` script to install the requirements and source the script as `glb`.
 
-You can change the location of the script installation with first argument for the script and change the source profile with second argument
+You can change the location of the script installation with first argument of the script,
+and change the source profile with second argument
 `./import.sh /home/ubuntu/scripts ~/.bashrc`
 
 # Requirements
