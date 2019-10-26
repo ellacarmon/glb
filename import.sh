@@ -26,7 +26,9 @@ echo "The path of the script is ${PATH_TO_INSTALL}"
 echo ""
 echo "Cloning script to ${PATH_TO_INSTALL}"
 cd ${PATH_TO_INSTALL}
-curl -O https://github.com/ellacarmon/buffer/blob/master/get_latest_branches.py
+git clone https://github.com/ellacarmon/glb.git
+cd glb
+cp get_latest_branches.py ${PATH_TO_INSTALL}
 SOURCE_FOLDER=~/.zshrc
 if [[ -n $2 ]]
     then
@@ -35,7 +37,7 @@ fi
 
 echo "source folder is ${SOURCE_FOLDER}"
 echo "adding glb alias"
-ALIAS='alias glb="python3 '${PATH_TO_INSTALL}'get_latest_branches.py"'
+ALIAS='alias glb="python3 '${PATH_TO_INSTALL}'/get_latest_branches.py"'
 
 echo ${ALIAS} >> ${SOURCE_FOLDER}
 source ${SOURCE_FOLDER}
