@@ -14,6 +14,7 @@ and change the source profile with second argument
 
 # Requirements
 `pip install GitPython`
+`pip install termcolor`
 
 # Usage
 `python3 get_latest_branches.py`
