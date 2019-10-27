@@ -14,6 +14,8 @@ echo "Second argument will be the source profile folder, deafult is ~/.zshrc"
 echo ""
 echo "Installing GitPython package"
 pip install GitPython
+echo "installing termcolor"
+pip install termcolor
 
 PATH_TO_INSTALL=$HOME/
 
