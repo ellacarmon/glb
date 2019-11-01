@@ -45,6 +45,10 @@ def get_branches(chosen_number):
         repo.git.checkout(chosen_branch)
         if repo.active_branch.name == chosen_branch:
                 print("\nCheckedout\checkouted successfully to {}".format(chosen_branch))
+        if repo.active_branch.name == 'master':
+            origin = repo.remotes.origin
+            print("chosen branch is master, performing git pull")
+            origin.pull()
 
     except git.exc.GitCommandError as e:
         print("Can't checkout due to {}".format(bold(e.stderr, 'red')))
