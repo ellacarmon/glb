@@ -5,6 +5,12 @@ Default number of branches is 5.
 
 Repo path (.git) will be taken from the location you run the script from
 
+## New: Branch Filtering
+GLB now supports filtering branches to make branch selection more efficient:
+
+- **Name filtering**: Filter branches by name patterns using wildcards
+- **Date filtering**: Filter branches by last commit date
+
 # Installation
 Use the `import.sh` script to install the requirements and source the script as `glb`.
 
@@ -27,6 +33,27 @@ If you want to see more branches,  add `-n` or `--number` following the number o
 `python3 get_latest_branches.py -n 8`
 
 `python3 get_latest_branches.py --number 10`
+
+## Filtering Options
+
+### Filter by branch name pattern:
+`python3 get_latest_branches.py --filter-name "feature/*"`
+
+`python3 get_latest_branches.py --filter-name "hotfix/*"`
+
+`python3 get_latest_branches.py --filter-name "*bugfix*"`
+
+### Filter by last commit date:
+`python3 get_latest_branches.py --filter-date "week"`
+
+`python3 get_latest_branches.py --filter-date "month"`
+
+`python3 get_latest_branches.py --filter-date "7d"`
+
+`python3 get_latest_branches.py --filter-date "30d"`
+
+### Combine filters:
+`python3 get_latest_branches.py --filter-name "feature/*" --filter-date "week" -n 10`
 
 
 
