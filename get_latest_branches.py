@@ -66,9 +66,9 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--number", "-n", dest='chosen_number', type=int, default=5,
                         help="The number of branches you wish to display")
-    parser.add_argument("--filter-name", dest='name_filter', type=str,
+    parser.add_argument("--filter-name", "-f", dest='name_filter', type=str,
                         help="Filter branches by name pattern (supports wildcards)")
-    parser.add_argument("--filter-date", dest='date_filter', type=str,
+    parser.add_argument("--filter-date", "-d", dest='date_filter', type=str,
                         help="Filter branches by last commit date (e.g., 'week', 'month', '7d', '30d')")
     return parser.parse_args()
 
