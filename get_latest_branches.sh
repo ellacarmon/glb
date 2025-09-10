@@ -346,10 +346,9 @@ get_branches() {
     if [[ "$chosen_branch" == "$current_branch" ]]; then
         echo ""
         echo "You are already working on $(red "$chosen_branch")"
-        return 0
     fi
     
-    # Attempt checkout
+    # Always attempt checkout (matching Python behavior)
     local checkout_error
     if checkout_error=$(git checkout "$chosen_branch" 2>&1); then
         local new_current
