@@ -34,6 +34,16 @@ If you want to see more branches,  add `-n` or `--number` following the number o
 
 `python3 get_latest_branches.py --number 10`
 
+## Quick Switch to Previous Branch
+
+Switch directly to the previous branch without the interactive menu:
+
+`python3 get_latest_branches.py --previous`
+
+`python3 get_latest_branches.py -p`
+
+This is equivalent to `git checkout -` and useful when switching between two branches frequently.
+
 ## Filtering Options
 
 ### Filter by branch name pattern:

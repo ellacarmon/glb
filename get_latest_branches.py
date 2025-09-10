@@ -8,6 +8,64 @@ from operator import itemgetter
 from termcolor import colored
 
 
+def get_previous_branch():
+    """Get the previous branch from git reflog."""
+    try:
+        repo = git.Repo(search_parent_directories=True)
+        
+        # Use git command directly to get reflog with checkout messages
+        reflog_output = repo.git.reflog('--grep-reflog=checkout', '--format=%gs', '-n', '10')
+        
+        if not reflog_output:
+            return None
+            
+        # Split lines and find the first checkout message
+        lines = reflog_output.strip().split('\n')
+        
+        for line in lines:
+            if 'checkout: moving from' in line:
+                # Extract the previous branch name from the message
+                # Message format: "checkout: moving from <from_branch> to <to_branch>"
+                parts = line.split(' ')
+                if len(parts) >= 4:
+                    previous_branch = parts[3]  # The "from" branch
+                    return previous_branch
+        
+        return None
+    except Exception:
+        return None
+
+
+def checkout_previous_branch():
+    """Switch to the previous branch."""
+    bold = partial(colored, attrs=['bold'])
+    repo = git.Repo(search_parent_directories=True)
+    
+    previous_branch = get_previous_branch()
+    
+    if not previous_branch:
+        print("No previous branch found in git history.")
+        return False
+    
+    current_branch = repo.active_branch.name
+    
+    if previous_branch == current_branch:
+        print("Previous branch is the same as current branch ({})".format(bold(current_branch, 'yellow')))
+        return False
+    
+    try:
+        print("Switching to previous branch: {}".format(bold(previous_branch, 'blue')))
+        repo.git.checkout(previous_branch)
+        if repo.active_branch.name == previous_branch:
+            print("Successfully switched to {}".format(bold(previous_branch, 'green')))
+            return True
+    except git.exc.GitCommandError as e:
+        print("Can't checkout due to {}".format(bold(str(e.stderr), 'red')))
+        return False
+    
+    return False
+
+
 def parse_date_filter(date_filter):
     """Parse date filter string and return datetime threshold."""
     if not date_filter:
@@ -70,6 +128,8 @@ def parse_args():
                         help="Filter branches by name pattern (supports wildcards)")
     parser.add_argument("--filter-date", "-d", dest='date_filter', type=str,
                         help="Filter branches by last commit date (e.g., 'week', 'month', '7d', '30d')")
+    parser.add_argument("--previous", "-p", dest='previous', action='store_true',
+                        help="Switch to the previous branch (equivalent to 'git checkout -')")
     return parser.parse_args()
 
 
@@ -134,4 +194,9 @@ def get_branches(chosen_number, name_filter=None, date_filter=None):
 
 if __name__ == "__main__":
     args = parse_args()
-    get_branches(args.chosen_number, args.name_filter, args.date_filter)
+    
+    # Handle previous branch flag
+    if args.previous:
+        checkout_previous_branch()
+    else:
+        get_branches(args.chosen_number, args.name_filter, args.date_filter)
