@@ -121,7 +121,9 @@ def filter_branches(branches_with_dates, name_filter=None, date_filter=None):
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--number", "-n", dest='chosen_number', type=int, default=5,
+    parser.add_argument("number", nargs='?', type=int,
+                        help="The number of branches you wish to display")
+    parser.add_argument("--number", "-n", dest='chosen_number', type=int,
                         help="The number of branches you wish to display")
     parser.add_argument("--filter-name", "-f", dest='name_filter', type=str,
                         help="Filter branches by name pattern (supports wildcards)")
@@ -129,7 +131,16 @@ def parse_args():
                         help="Filter branches by last commit date (e.g., 'week', 'month', '7d', '30d')")
     parser.add_argument("--previous", "-p", dest='previous', action='store_true',
                         help="Switch to the previous branch (equivalent to 'git checkout -')")
-    return parser.parse_args()
+    
+    args = parser.parse_args()
+    
+    # Handle number precedence: positional argument takes precedence over flag
+    if args.number is not None:
+        args.chosen_number = args.number
+    elif args.chosen_number is None:
+        args.chosen_number = 5  # Default value
+    
+    return args
 
 
 def get_branches(chosen_number, name_filter=None, date_filter=None):
