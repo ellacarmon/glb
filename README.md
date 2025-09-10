@@ -28,7 +28,11 @@ and change the source profile with second argument
 
 A list of the latest branches will be printed and you'll be prompted to choose the branch you would like to checkout to
 
-If you want to see more branches,  add `-n` or `--number` following the number of branches you would like to see
+If you want to see more branches, you can simply specify the number as a positional argument:
+
+`python3 get_latest_branches.py 8`
+
+You can also use the traditional `-n` or `--number` flags:
 
 `python3 get_latest_branches.py -n 8`
 
@@ -63,12 +67,12 @@ This is equivalent to `git checkout -` and useful when switching between two bra
 `python3 get_latest_branches.py --filter-date "30d"`
 
 ### Combine filters:
-`python3 get_latest_branches.py --filter-name "feature/*" --filter-date "week" -n 10`
+`python3 get_latest_branches.py 10 --filter-name "feature/*" --filter-date "week"`
 
 
 
 ```
-» glb -n 3               
+» glb 3               
 ###############################################
 ### Welcome to your friendly git checkouter ###
 ###############################################
