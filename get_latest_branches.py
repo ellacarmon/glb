@@ -54,10 +54,9 @@ def checkout_previous_branch():
         return False
     
     try:
-        print("Switching to previous branch: {}".format(bold(previous_branch, 'blue')))
         repo.git.checkout(previous_branch)
         if repo.active_branch.name == previous_branch:
-            print("Successfully switched to {}".format(bold(previous_branch, 'green')))
+            print("Successfully switched from {} to {}".format(bold(current_branch, 'blue), bold(previous_branch, 'green')))
             return True
     except git.exc.GitCommandError as e:
         print("Can't checkout due to {}".format(bold(str(e.stderr), 'red')))
